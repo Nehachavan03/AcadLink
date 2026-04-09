@@ -14,13 +14,21 @@ async def lifespan(app: FastAPI):
     if not os.path.exists("app/uploads"):
         os.makedirs("app/uploads")
         
-    # Initialize MySQL DB
-    await init_db()
+    # Initialize MySQL DB with robust error handling
+    try:
+        print("🚀 Initializing Database...")
+        await init_db()
+        print("✅ Database Connected.")
+    except Exception as e:
+        print(f"❌ DATABASE CONNECTION FAILED: {str(e)}")
+        # In cloud environments, we might want to let the app start anyway
+        # so we can see logs / debug, but for now we let it raise
     
     # Run migrations
     from sqlalchemy import text
     from app.core.database import engine
     try:
+        print("🛠️ Running Database Migrations...")
         async with engine.begin() as conn:
             # Migration: XP
             try: await conn.execute(text("ALTER TABLE users ADD COLUMN xp INT DEFAULT 0"))
@@ -53,11 +61,8 @@ async def lifespan(app: FastAPI):
             except: pass
             
             # Migration: Parent Portal & Notices
-            # 🚨 FIX: Modify role column enumeration to match SQLAlchemy names (UPPERCASE)
             try: await conn.execute(text("ALTER TABLE users MODIFY COLUMN role ENUM('STUDENT', 'FACULTY', 'ADMIN', 'PARENT') NOT NULL"))
             except: pass
-
-
 
             try: await conn.execute(text("ALTER TABLE users ADD COLUMN linked_student_email VARCHAR(255) NULL"))
             except: pass
@@ -68,18 +73,24 @@ async def lifespan(app: FastAPI):
                         id INT AUTO_INCREMENT PRIMARY KEY,
                         title VARCHAR(255) NOT NULL,
                         content TEXT NOT NULL,
-                        target_year VARCHAR(50) NULL,
+                        attachment_url VARCHAR(500) NULL,
                         author_id INT NOT NULL,
                         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                         FOREIGN KEY (author_id) REFERENCES users(id)
                     )
                 """))
             except: pass
+
+            # Migration: Notice Attachment URL
+            try: await conn.execute(text("ALTER TABLE notices ADD COLUMN attachment_url VARCHAR(500) NULL"))
+            except: pass
             
             await conn.commit()
-
-    except:
-        pass # Migrations failed or already done
+        print("✅ Migrations Completed.")
+    except Exception as e:
+        print(f"⚠️ MIGRATION ERROR: {str(e)}")
+    
+    yield
     
     yield
 
