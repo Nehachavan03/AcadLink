@@ -163,8 +163,9 @@ const LoginPage: React.FC = () => {
                 <CardDescription>Register with your institution email</CardDescription>
 
                 {/* Role Selection */}
-                <div className="grid grid-cols-4 gap-2 mt-4">
-                  {ROLES.map((role) => (
+                <div className="grid grid-cols-3 gap-2 mt-4">
+                  {ROLES.filter(r => r.value !== "ADMIN").map((role) => (
+
                     <button
                       key={role.value}
                       type="button"

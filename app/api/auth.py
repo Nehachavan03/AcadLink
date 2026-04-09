@@ -25,7 +25,15 @@ async def register_user(user_in: UserCreate, db: AsyncSession = Depends(get_data
                 detail="User with this email already exists"
             )
         
+        # ADMIN Restriction: Only specific email can register as ADMIN
+        if user_in.role == SchemaUserRole.ADMIN and user_in.email != "1012411300@despu.edu.in":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Direct Admin registration is restricted to authorized institution emails only."
+            )
+        
         # Handle Parent role specific logic
+
         if user_in.role == SchemaUserRole.PARENT:
             if not user_in.linked_student_email:
                 raise HTTPException(status_code=400, detail="Parent registration requires student email")
