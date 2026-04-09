@@ -1,16 +1,49 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Button } from "@/components/ui/button";
+import { GraduationCap, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-background">
+      <div className="text-center space-y-6 max-w-2xl mx-auto">
+        <div className="inline-flex items-center gap-3 mb-4">
+          <GraduationCap className="h-12 w-12 text-primary" />
+          <h1 className="text-4xl font-bold tracking-tight">AcadLink</h1>
+        </div>
+
+        <h2 className="text-3xl font-semibold text-muted-foreground">
+          Academic Management Reimagined
+        </h2>
+
+        <p className="text-lg text-muted-foreground leading-relaxed">
+          The unified portal for students, faculty, and parents to track academic progress,
+          manage assignments, and stay connected with the institution.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+          <Button
+            size="lg"
+            className="gap-2"
+            onClick={() => navigate("/login")}
+          >
+            Sign In to Portal <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+          >
+            Learn More
+          </Button>
+        </div>
+      </div>
+
+      <footer className="mt-20 text-sm text-muted-foreground">
+        © 2026 AcadLink. All rights reserved.
+      </footer>
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
