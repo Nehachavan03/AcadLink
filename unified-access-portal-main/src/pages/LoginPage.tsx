@@ -89,10 +89,10 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center p-4 gradient-hero">
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8 flex flex-col items-center">
-          <img src="/logo.png" alt="AcadLink Logo" className="h-24 mb-2 object-contain" />
-          <h1 className="text-3xl font-bold text-primary-foreground sr-only">AcadLink</h1>
-          <p className="text-muted-foreground text-sm">Student Academic Management System</p>
+        <div className="text-center mb-6 flex flex-col items-center">
+          <img src="/logo.png" alt="AcadLink Logo" className="h-20 md:h-28 mb-2 object-contain transition-all" />
+          <h1 className="text-2xl md:text-3xl font-bold text-primary-foreground sr-only">AcadLink</h1>
+          <p className="text-muted-foreground text-xs md:text-sm">Student Academic Management System</p>
         </div>
 
         <Card className="shadow-xl border-0">
@@ -108,15 +108,15 @@ const LoginPage: React.FC = () => {
                 <CardDescription>Sign in to your account</CardDescription>
 
                 {/* Role Selection */}
-                <div className="grid grid-cols-4 gap-2 mt-4">
+                <div className="grid grid-cols-2 xs:grid-cols-4 gap-2 mt-4">
                   {ROLES.map((role) => (
                     <button
                       key={role.value}
                       type="button"
                       onClick={() => setSelectedRole(role.value)}
                       className={`flex flex-col items-center gap-1 p-2 rounded-lg border-2 transition-all text-[10px] ${selectedRole === role.value
-                          ? "border-primary bg-primary/5 text-primary"
-                          : "border-border hover:border-primary/30 text-muted-foreground"
+                        ? "border-primary bg-primary/5 text-primary"
+                        : "border-border hover:border-primary/30 text-muted-foreground"
                         }`}
                     >
                       <role.icon className="h-4 w-4" />
@@ -160,7 +160,7 @@ const LoginPage: React.FC = () => {
                 <CardDescription>Register with your institution email</CardDescription>
 
                 {/* Role Selection */}
-                <div className="grid grid-cols-3 gap-2 mt-4">
+                <div className="grid grid-cols-2 xs:grid-cols-3 gap-2 mt-4">
                   {ROLES.filter(r => r.value !== "ADMIN").map((role) => (
 
                     <button
@@ -168,8 +168,8 @@ const LoginPage: React.FC = () => {
                       type="button"
                       onClick={() => setSelectedRole(role.value)}
                       className={`flex flex-col items-center gap-1 p-2 rounded-lg border-2 transition-all text-[10px] ${selectedRole === role.value
-                          ? "border-primary bg-primary/5 text-primary"
-                          : "border-border hover:border-primary/30 text-muted-foreground"
+                        ? "border-primary bg-primary/5 text-primary"
+                        : "border-border hover:border-primary/30 text-muted-foreground"
                         }`}
                     >
                       <role.icon className="h-4 w-4" />
