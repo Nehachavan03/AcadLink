@@ -8,13 +8,14 @@ import os
 
 from app.api import auth, attendance, dashboard, assignments, resources, community, achievements, admin, notices
 
+# Ensure essential directories exist at module load time to prevent mount errors
+os.makedirs("app/uploads", exist_ok=True)
+os.makedirs("app/uploads/notices", exist_ok=True)
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Ensure uploads directory exists
-    if not os.path.exists("app/uploads"):
-        os.makedirs("app/uploads")
-        
     # Initialize MySQL DB with robust error handling
+
     try:
         print("🚀 Initializing Database...")
         await init_db()
