@@ -61,10 +61,10 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await authApi.register({ 
-        email, 
-        full_name: fullName, 
-        password, 
+      await authApi.register({
+        email,
+        full_name: fullName,
+        password,
         role: selectedRole,
         linked_student_email: selectedRole === "parent" ? linkedStudentEmail : undefined
       });
@@ -89,11 +89,9 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center p-4 gradient-hero">
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-2">
-            <GraduationCap className="h-10 w-10 text-accent" />
-            <h1 className="text-3xl font-bold text-primary-foreground">AcadLink</h1>
-          </div>
+        <div className="text-center mb-8 flex flex-col items-center">
+          <img src="/logo.png" alt="AcadLink Logo" className="h-24 mb-2 object-contain" />
+          <h1 className="text-3xl font-bold text-primary-foreground sr-only">AcadLink</h1>
           <p className="text-muted-foreground text-sm">Student Academic Management System</p>
         </div>
 
@@ -116,11 +114,10 @@ const LoginPage: React.FC = () => {
                       key={role.value}
                       type="button"
                       onClick={() => setSelectedRole(role.value)}
-                      className={`flex flex-col items-center gap-1 p-2 rounded-lg border-2 transition-all text-[10px] ${
-                        selectedRole === role.value
+                      className={`flex flex-col items-center gap-1 p-2 rounded-lg border-2 transition-all text-[10px] ${selectedRole === role.value
                           ? "border-primary bg-primary/5 text-primary"
                           : "border-border hover:border-primary/30 text-muted-foreground"
-                      }`}
+                        }`}
                     >
                       <role.icon className="h-4 w-4" />
                       <span className="font-medium">{role.label}</span>
@@ -170,11 +167,10 @@ const LoginPage: React.FC = () => {
                       key={role.value}
                       type="button"
                       onClick={() => setSelectedRole(role.value)}
-                      className={`flex flex-col items-center gap-1 p-2 rounded-lg border-2 transition-all text-[10px] ${
-                        selectedRole === role.value
+                      className={`flex flex-col items-center gap-1 p-2 rounded-lg border-2 transition-all text-[10px] ${selectedRole === role.value
                           ? "border-primary bg-primary/5 text-primary"
                           : "border-border hover:border-primary/30 text-muted-foreground"
-                      }`}
+                        }`}
                     >
                       <role.icon className="h-4 w-4" />
                       <span className="font-medium">{role.label}</span>
@@ -188,7 +184,7 @@ const LoginPage: React.FC = () => {
                     <Label htmlFor="reg-name">Full Name</Label>
                     <Input
                       id="reg-name"
-                      placeholder="John Doe"
+                      placeholder="user name"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required

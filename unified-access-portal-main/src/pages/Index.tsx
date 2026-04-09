@@ -7,11 +7,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-background">
-      <div className="text-center space-y-6 max-w-2xl mx-auto">
-        <div className="inline-flex items-center gap-3 mb-4">
-          <GraduationCap className="h-12 w-12 text-primary" />
-          <h1 className="text-4xl font-bold tracking-tight">AcadLink</h1>
-        </div>
+      <div className="text-center space-y-6 max-w-2xl mx-auto flex flex-col items-center">
+        <img src="/logo.png" alt="AcadLink Logo" className="h-32 mb-4 object-contain" />
+        <h1 className="text-4xl font-bold tracking-tight sr-only">AcadLink</h1>
+
 
         <h2 className="text-3xl font-semibold text-muted-foreground">
           Academic Management Reimagined
