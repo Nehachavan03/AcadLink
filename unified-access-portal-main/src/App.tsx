@@ -13,6 +13,8 @@ import ResourcesPage from "./pages/ResourcesPage";
 import CommunityPage from "./pages/CommunityPage";
 import AchievementsPage from "./pages/AchievementsPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
+import AdminSubjectsPage from "./pages/AdminSubjectsPage";
+import AdminSettingsPage from "./pages/AdminSettingsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,7 +35,10 @@ const App = () => (
             <Route path="/resources" element={<ProtectedRoute><ResourcesPage /></ProtectedRoute>} />
             <Route path="/community" element={<ProtectedRoute><CommunityPage /></ProtectedRoute>} />
             <Route path="/achievements" element={<ProtectedRoute><AchievementsPage /></ProtectedRoute>} />
-            <Route path="/admin/users" element={<ProtectedRoute roles={["admin"]}><AdminUsersPage /></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute roles={["ADMIN"]}><AdminUsersPage /></ProtectedRoute>} />
+            <Route path="/admin/subjects" element={<ProtectedRoute roles={["ADMIN"]}><AdminSubjectsPage /></ProtectedRoute>} />
+            <Route path="/admin/settings" element={<ProtectedRoute roles={["ADMIN"]}><AdminSettingsPage /></ProtectedRoute>} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

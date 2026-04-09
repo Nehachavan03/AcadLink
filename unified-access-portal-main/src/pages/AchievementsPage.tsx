@@ -18,10 +18,13 @@ const AchievementsPage: React.FC = () => {
   const [form, setForm] = useState({ student_email: "", title: "", description: "", category: "" });
   const [loading, setLoading] = useState(false);
 
-  const isFacultyOrAdmin = user?.role === "faculty" || user?.role === "admin";
+  const isFacultyOrAdmin = user?.role === "FACULTY" || user?.role === "ADMIN";
+
 
   useEffect(() => {
-    if (user?.token && user.role === "student") fetchAchievements();
+    if (user?.token && (user.role === "STUDENT" || user.role === "PARENT")) fetchAchievements();
+
+
   }, [user?.token, user?.role]);
 
   const fetchAchievements = async () => {
@@ -90,7 +93,9 @@ const AchievementsPage: React.FC = () => {
           </Card>
         )}
 
-        {user?.role === "student" && (
+        {(user?.role === "STUDENT" || user?.role === "PARENT") && (
+
+
           <div className="grid gap-4">
             {achievements.length === 0 ? (
               <Card><CardContent className="p-6 text-center text-muted-foreground text-sm">No achievements yet.</CardContent></Card>

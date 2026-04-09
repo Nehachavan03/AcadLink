@@ -3,13 +3,15 @@ import { jwtDecode } from "jwt-decode";
 
 interface DecodedToken {
   sub: string; // email
-  role: "student" | "faculty" | "admin";
+  role: "STUDENT" | "FACULTY" | "ADMIN" | "PARENT";
+
   exp: number;
 }
 
 interface AuthUser {
   email: string;
-  role: "student" | "faculty" | "admin";
+  role: "STUDENT" | "FACULTY" | "ADMIN" | "PARENT";
+
   token: string;
 }
 

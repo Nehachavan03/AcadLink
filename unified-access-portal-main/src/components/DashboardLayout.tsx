@@ -84,7 +84,7 @@ function getNavItems(role: string) {
     { href: "/community", label: "Community", icon: MessageSquare },
   ];
 
-  if (role === "student") {
+  if (role === "STUDENT") {
     return [
       ...common,
       { href: "/attendance", label: "My Attendance", icon: Calendar },
@@ -93,7 +93,7 @@ function getNavItems(role: string) {
       { href: "/achievements", label: "Achievements", icon: Trophy },
     ];
   }
-  if (role === "faculty") {
+  if (role === "FACULTY") {
     return [
       ...common,
       { href: "/attendance", label: "Mark Attendance", icon: Calendar },
@@ -102,16 +102,23 @@ function getNavItems(role: string) {
       { href: "/achievements", label: "Award Achievement", icon: Trophy },
     ];
   }
-  // admin
+  if (role === "PARENT") {
+    return [
+      { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { href: "/achievements", label: "Achievements", icon: Trophy },
+    ];
+  }
+
+  // ADMIN
   return [
     ...common,
     { href: "/admin/users", label: "User Management", icon: Users },
-    { href: "/attendance", label: "Attendance", icon: Calendar },
-    { href: "/assignments", label: "Assignments", icon: ClipboardList },
-    { href: "/resources", label: "Resources", icon: BookOpen },
+    { href: "/admin/subjects", label: "Manage Subjects", icon: BookOpen },
+    { href: "/resources", label: "Resources", icon: ClipboardList },
     { href: "/achievements", label: "Achievements", icon: Trophy },
     { href: "/admin/settings", label: "Settings", icon: Settings },
   ];
 }
+
 
 export default DashboardLayout;

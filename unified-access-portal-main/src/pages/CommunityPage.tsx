@@ -9,7 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { communityApi } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
-import { MessageSquare, Plus, Send } from "lucide-react";
+import { MessageSquare, Plus, Send, Trash2 } from "lucide-react";
+
 
 const CommunityPage: React.FC = () => {
   const { user } = useAuth();
@@ -65,6 +66,17 @@ const CommunityPage: React.FC = () => {
     }
   };
 
+  const handleDeletePost = async (postId: string) => {
+    if (!user?.token || !confirm("Are you sure you want to delete this post?")) return;
+    try {
+      await communityApi.deletePost(postId, user.token);
+      toast({ title: "Post deleted successfully" });
+      fetchPosts();
+    } catch (err: unknown) {
+      toast({ title: "Delete failed", description: err instanceof Error ? err.message : "Failed", variant: "destructive" });
+    }
+  };
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -73,9 +85,11 @@ const CommunityPage: React.FC = () => {
             <MessageSquare className="h-6 w-6 text-primary" />
             <h1 className="text-2xl font-bold">Community Forum</h1>
           </div>
-          <Button onClick={() => setShowCreate(!showCreate)}>
-            <Plus className="h-4 w-4 mr-1" /> New Post
-          </Button>
+          {(user?.role === "FACULTY" || user?.role === "ADMIN" || user?.role === "STUDENT") && (
+            <Button onClick={() => setShowCreate(!showCreate)}>
+              <Plus className="h-4 w-4 mr-1" /> New Post
+            </Button>
+          )}
         </div>
 
         {showCreate && (
@@ -108,8 +122,17 @@ const CommunityPage: React.FC = () => {
             posts.map((p: any) => (
               <Card key={p._id || p.id}>
                 <CardContent className="p-5">
-                  <h3 className="font-semibold text-lg">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1">by {p.author_name} · {p.created_at}</p>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-semibold text-lg">{p.title}</h3>
+                      <p className="text-sm text-muted-foreground mt-1">by {p.author_name} · {p.created_at}</p>
+                    </div>
+                    {user?.role === "ADMIN" && (
+                      <Button variant="ghost" size="sm" onClick={() => handleDeletePost(p._id || p.id)} className="text-destructive h-8 w-8 p-0">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
                   <p className="text-sm mt-3">{p.content}</p>
                   {p.tags?.length > 0 && (
                     <div className="flex gap-1 mt-3">
